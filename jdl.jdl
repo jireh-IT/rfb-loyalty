@@ -1,0 +1,35 @@
+
+
+
+
+entity Event{
+	eventDate LocalDate,
+    eventCode String
+}
+entity EventAttendance{
+	attendanceDate LocalDate,
+}
+
+entity Location {
+	locationName String,
+    runDayOfWeek Integer
+}
+
+entity RfbUser {
+	username String required
+}
+
+relationship OneToOne {
+	EventAttendance{rfbUser} to RfbUser,
+    RfbUser {homeLocation} to Location
+}
+
+relationship OneToMany {
+    Location{event} to Event,
+    Event{eventAttendance} to EventAttendance
+}
+
+dto *with mapstruct
+service all with serviceImpl
+paginate Location, Event with pagination
+paginate EventAttendance with infinite-scroll

@@ -4,12 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import com.jireh.IntegrationTest;
-import com.jireh.config.Constants;
 import com.jireh.domain.PersistentToken;
 import com.jireh.domain.User;
 import com.jireh.repository.PersistentTokenRepository;
 import com.jireh.repository.UserRepository;
-import com.jireh.service.dto.AdminUserDTO;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,8 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.auditing.AuditingHandler;
 import org.springframework.data.auditing.DateTimeProvider;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import tech.jhipster.security.RandomUtil;
 
