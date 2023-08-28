@@ -1,0 +1,24 @@
+{
+  "applications": "*",
+  "changelogDate": "20230828150445",
+  "dto": "mapstruct",
+  "entityTableName": "rfb_user",
+  "fields": [
+    {
+      "fieldName": "username",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "RfbUser",
+  "relationships": [
+    {
+      "otherEntityName": "location",
+      "relationshipName": "homeLocation",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

@@ -1,0 +1,28 @@
+{
+  "applications": "*",
+  "changelogDate": "20230828150444",
+  "dto": "mapstruct",
+  "entityTableName": "location",
+  "fields": [
+    {
+      "fieldName": "locationName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "runDayOfWeek",
+      "fieldType": "Integer"
+    }
+  ],
+  "name": "Location",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "event",
+      "relationshipName": "event",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

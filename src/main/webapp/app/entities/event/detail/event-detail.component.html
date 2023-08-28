@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="event">
+      <h2 data-cy="eventDetailsHeading"><span jhiTranslate="rfbLoyaltyApp.event.detail.title">Event</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ event.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="rfbLoyaltyApp.event.eventDate">Event Date</span></dt>
+        <dd>
+          <span>{{ event.eventDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="rfbLoyaltyApp.event.eventCode">Event Code</span></dt>
+        <dd>
+          <span>{{ event.eventCode }}</span>
+        </dd>
+        <dt><span jhiTranslate="rfbLoyaltyApp.event.location">Location</span></dt>
+        <dd>
+          <div *ngIf="event.location">
+            <a [routerLink]="['/location', event.location.id, 'view']">{{ event.location.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/event', event.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

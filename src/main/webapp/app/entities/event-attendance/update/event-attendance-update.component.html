@@ -1,0 +1,82 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-event-attendance-heading"
+        data-cy="EventAttendanceCreateUpdateHeading"
+        jhiTranslate="rfbLoyaltyApp.eventAttendance.home.createOrEditLabel"
+      >
+        Create or edit a Event Attendance
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="rfbLoyaltyApp.eventAttendance.attendanceDate" for="field_attendanceDate"
+            >Attendance Date</label
+          >
+          <div class="input-group">
+            <input
+              id="field_attendanceDate"
+              data-cy="attendanceDate"
+              type="text"
+              class="form-control"
+              name="attendanceDate"
+              ngbDatepicker
+              #attendanceDateDp="ngbDatepicker"
+              formControlName="attendanceDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="attendanceDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="rfbLoyaltyApp.eventAttendance.rfbUser" for="field_rfbUser">Rfb User</label>
+          <select
+            class="form-control"
+            id="field_rfbUser"
+            data-cy="rfbUser"
+            name="rfbUser"
+            formControlName="rfbUser"
+            [compareWith]="compareRfbUser"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="rfbUserOption" *ngFor="let rfbUserOption of rfbUsersCollection">{{ rfbUserOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="rfbLoyaltyApp.eventAttendance.event" for="field_event">Event</label>
+          <select class="form-control" id="field_event" data-cy="event" name="event" formControlName="event" [compareWith]="compareEvent">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="eventOption" *ngFor="let eventOption of eventsSharedCollection">{{ eventOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

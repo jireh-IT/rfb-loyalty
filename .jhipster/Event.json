@@ -1,0 +1,28 @@
+{
+  "applications": "*",
+  "changelogDate": "20230828150442",
+  "dto": "mapstruct",
+  "entityTableName": "event",
+  "fields": [
+    {
+      "fieldName": "eventDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "eventCode",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Event",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "eventAttendance",
+      "relationshipName": "eventAttendance",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

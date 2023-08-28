@@ -1,0 +1,71 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-event-heading" data-cy="EventCreateUpdateHeading" jhiTranslate="rfbLoyaltyApp.event.home.createOrEditLabel">
+        Create or edit a Event
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="rfbLoyaltyApp.event.eventDate" for="field_eventDate">Event Date</label>
+          <div class="input-group">
+            <input
+              id="field_eventDate"
+              data-cy="eventDate"
+              type="text"
+              class="form-control"
+              name="eventDate"
+              ngbDatepicker
+              #eventDateDp="ngbDatepicker"
+              formControlName="eventDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="eventDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="rfbLoyaltyApp.event.eventCode" for="field_eventCode">Event Code</label>
+          <input type="text" class="form-control" name="eventCode" id="field_eventCode" data-cy="eventCode" formControlName="eventCode" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="rfbLoyaltyApp.event.location" for="field_location">Location</label>
+          <select
+            class="form-control"
+            id="field_location"
+            data-cy="location"
+            name="location"
+            formControlName="location"
+            [compareWith]="compareLocation"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="locationOption" *ngFor="let locationOption of locationsSharedCollection">{{ locationOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

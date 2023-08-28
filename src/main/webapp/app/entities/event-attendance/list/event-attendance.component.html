@@ -1,0 +1,115 @@
+<div>
+  <h2 id="page-heading" data-cy="EventAttendanceHeading">
+    <span jhiTranslate="rfbLoyaltyApp.eventAttendance.home.title">Event Attendances</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="rfbLoyaltyApp.eventAttendance.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-event-attendance"
+        [routerLink]="['/event-attendance/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="rfbLoyaltyApp.eventAttendance.home.createLabel"> Create a new Event Attendance </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="eventAttendances?.length === 0">
+    <span jhiTranslate="rfbLoyaltyApp.eventAttendance.home.notFound">No Event Attendances found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="eventAttendances && eventAttendances.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="attendanceDate">
+            <div class="d-flex">
+              <span jhiTranslate="rfbLoyaltyApp.eventAttendance.attendanceDate">Attendance Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="rfbUser.id">
+            <div class="d-flex">
+              <span jhiTranslate="rfbLoyaltyApp.eventAttendance.rfbUser">Rfb User</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="event.id">
+            <div class="d-flex">
+              <span jhiTranslate="rfbLoyaltyApp.eventAttendance.event">Event</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let eventAttendance of eventAttendances; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/event-attendance', eventAttendance.id, 'view']">{{ eventAttendance.id }}</a>
+          </td>
+          <td>{{ eventAttendance.attendanceDate | formatMediumDate }}</td>
+          <td>
+            <div *ngIf="eventAttendance.rfbUser">
+              <a [routerLink]="['/rfb-user', eventAttendance.rfbUser.id, 'view']">{{ eventAttendance.rfbUser.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="eventAttendance.event">
+              <a [routerLink]="['/event', eventAttendance.event.id, 'view']">{{ eventAttendance.event.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/event-attendance', eventAttendance.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/event-attendance', eventAttendance.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(eventAttendance)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

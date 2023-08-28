@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="eventAttendance">
+      <h2 data-cy="eventAttendanceDetailsHeading">
+        <span jhiTranslate="rfbLoyaltyApp.eventAttendance.detail.title">Event Attendance</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ eventAttendance.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="rfbLoyaltyApp.eventAttendance.attendanceDate">Attendance Date</span></dt>
+        <dd>
+          <span>{{ eventAttendance.attendanceDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="rfbLoyaltyApp.eventAttendance.rfbUser">Rfb User</span></dt>
+        <dd>
+          <div *ngIf="eventAttendance.rfbUser">
+            <a [routerLink]="['/rfb-user', eventAttendance.rfbUser.id, 'view']">{{ eventAttendance.rfbUser.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="rfbLoyaltyApp.eventAttendance.event">Event</span></dt>
+        <dd>
+          <div *ngIf="eventAttendance.event">
+            <a [routerLink]="['/event', eventAttendance.event.id, 'view']">{{ eventAttendance.event.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/event-attendance', eventAttendance.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
