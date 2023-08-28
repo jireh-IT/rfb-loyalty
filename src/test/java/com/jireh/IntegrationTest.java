@@ -1,6 +1,5 @@
 package com.jireh;
 
-import com.jireh.RfbLoyaltyApp;
 import com.jireh.config.AsyncSyncConfiguration;
 import com.jireh.config.EmbeddedSQL;
 import java.lang.annotation.ElementType;

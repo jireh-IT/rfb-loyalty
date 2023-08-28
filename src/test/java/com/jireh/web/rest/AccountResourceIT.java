@@ -19,7 +19,6 @@ import com.jireh.security.AuthoritiesConstants;
 import com.jireh.service.UserService;
 import com.jireh.service.dto.AdminUserDTO;
 import com.jireh.service.dto.PasswordChangeDTO;
-import com.jireh.service.dto.UserDTO;
 import com.jireh.web.rest.vm.KeyAndPasswordVM;
 import com.jireh.web.rest.vm.ManagedUserVM;
 import java.time.Instant;
