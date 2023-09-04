@@ -29,7 +29,7 @@ public class Event implements Serializable {
     private String eventCode;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "event")
-    @JsonIgnoreProperties(value = { "rfbUser", "event" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "event", "rfbUser" }, allowSetters = true)
     private Set<EventAttendance> eventAttendances = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)

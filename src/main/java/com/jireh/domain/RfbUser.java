@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A RfbUser.
@@ -29,9 +31,9 @@ public class RfbUser implements Serializable {
     @JoinColumn(unique = true)
     private Location homeLocation;
 
-    @JsonIgnoreProperties(value = { "rfbUser", "event" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "rfbUser")
-    private EventAttendance eventAttendance;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rfbUser")
+    @JsonIgnoreProperties(value = { "event", "rfbUser" }, allowSetters = true)
+    private Set<EventAttendance> eventAttendances = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -74,22 +76,34 @@ public class RfbUser implements Serializable {
         return this;
     }
 
-    public EventAttendance getEventAttendance() {
-        return this.eventAttendance;
+    public Set<EventAttendance> getEventAttendances() {
+        return this.eventAttendances;
     }
 
-    public void setEventAttendance(EventAttendance eventAttendance) {
-        if (this.eventAttendance != null) {
-            this.eventAttendance.setRfbUser(null);
+    public void setEventAttendances(Set<EventAttendance> eventAttendances) {
+        if (this.eventAttendances != null) {
+            this.eventAttendances.forEach(i -> i.setRfbUser(null));
         }
-        if (eventAttendance != null) {
-            eventAttendance.setRfbUser(this);
+        if (eventAttendances != null) {
+            eventAttendances.forEach(i -> i.setRfbUser(this));
         }
-        this.eventAttendance = eventAttendance;
+        this.eventAttendances = eventAttendances;
     }
 
-    public RfbUser eventAttendance(EventAttendance eventAttendance) {
-        this.setEventAttendance(eventAttendance);
+    public RfbUser eventAttendances(Set<EventAttendance> eventAttendances) {
+        this.setEventAttendances(eventAttendances);
+        return this;
+    }
+
+    public RfbUser addEventAttendance(EventAttendance eventAttendance) {
+        this.eventAttendances.add(eventAttendance);
+        eventAttendance.setRfbUser(this);
+        return this;
+    }
+
+    public RfbUser removeEventAttendance(EventAttendance eventAttendance) {
+        this.eventAttendances.remove(eventAttendance);
+        eventAttendance.setRfbUser(null);
         return this;
     }
 

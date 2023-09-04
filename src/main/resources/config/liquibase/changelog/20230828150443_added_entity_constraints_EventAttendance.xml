@@ -8,18 +8,18 @@
     -->
     <changeSet id="20230828150443-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="rfb_user_id"
-                                 baseTableName="event_attendance"
-                                 constraintName="fk_event_attendance__rfb_user_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="rfb_user"
-                                 />
-
         <addForeignKeyConstraint baseColumnNames="event_id"
                                  baseTableName="event_attendance"
                                  constraintName="fk_event_attendance__event_id"
                                  referencedColumnNames="id"
                                  referencedTableName="event"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="rfb_user_id"
+                                 baseTableName="event_attendance"
+                                 constraintName="fk_event_attendance__rfb_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="rfb_user"
                                  />
     </changeSet>
 </databaseChangeLog>

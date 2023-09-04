@@ -9,7 +9,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -69,20 +68,6 @@ public class RfbUserServiceImpl implements RfbUserService {
     public List<RfbUserDTO> findAll() {
         log.debug("Request to get all RfbUsers");
         return rfbUserRepository.findAll().stream().map(rfbUserMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
-    }
-
-    /**
-     *  Get all the rfbUsers where EventAttendance is {@code null}.
-     *  @return the list of entities.
-     */
-    @Transactional(readOnly = true)
-    public List<RfbUserDTO> findAllWhereEventAttendanceIsNull() {
-        log.debug("Request to get all rfbUsers where EventAttendance is null");
-        return StreamSupport
-            .stream(rfbUserRepository.findAll().spliterator(), false)
-            .filter(rfbUser -> rfbUser.getEventAttendance() == null)
-            .map(rfbUserMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override

@@ -20,16 +20,16 @@
         <dd>
           <span>{{ eventAttendance.attendanceDate | formatMediumDate }}</span>
         </dd>
-        <dt><span jhiTranslate="rfbLoyaltyApp.eventAttendance.rfbUser">Rfb User</span></dt>
-        <dd>
-          <div *ngIf="eventAttendance.rfbUser">
-            <a [routerLink]="['/rfb-user', eventAttendance.rfbUser.id, 'view']">{{ eventAttendance.rfbUser.id }}</a>
-          </div>
-        </dd>
         <dt><span jhiTranslate="rfbLoyaltyApp.eventAttendance.event">Event</span></dt>
         <dd>
           <div *ngIf="eventAttendance.event">
             <a [routerLink]="['/event', eventAttendance.event.id, 'view']">{{ eventAttendance.event.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="rfbLoyaltyApp.eventAttendance.rfbUser">Rfb User</span></dt>
+        <dd>
+          <div *ngIf="eventAttendance.rfbUser">
+            <a [routerLink]="['/rfb-user', eventAttendance.rfbUser.id, 'view']">{{ eventAttendance.rfbUser.id }}</a>
           </div>
         </dd>
       </dl>

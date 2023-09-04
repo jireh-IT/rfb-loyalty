@@ -135,15 +135,10 @@ public class RfbUserResource {
     /**
      * {@code GET  /rfb-users} : get all the rfbUsers.
      *
-     * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of rfbUsers in body.
      */
     @GetMapping("/rfb-users")
-    public List<RfbUserDTO> getAllRfbUsers(@RequestParam(required = false) String filter) {
-        if ("eventattendance-is-null".equals(filter)) {
-            log.debug("REST request to get all RfbUsers where eventAttendance is null");
-            return rfbUserService.findAllWhereEventAttendanceIsNull();
-        }
+    public List<RfbUserDTO> getAllRfbUsers() {
         log.debug("REST request to get all RfbUsers");
         return rfbUserService.findAll();
     }

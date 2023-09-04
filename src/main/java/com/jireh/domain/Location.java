@@ -31,7 +31,7 @@ public class Location implements Serializable {
     @JsonIgnoreProperties(value = { "eventAttendances", "location" }, allowSetters = true)
     private Set<Event> events = new HashSet<>();
 
-    @JsonIgnoreProperties(value = { "homeLocation", "eventAttendance" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "homeLocation", "eventAttendances" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "homeLocation")
     private RfbUser rfbUser;
 

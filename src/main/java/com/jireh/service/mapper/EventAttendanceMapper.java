@@ -13,17 +13,17 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface EventAttendanceMapper extends EntityMapper<EventAttendanceDTO, EventAttendance> {
-    @Mapping(target = "rfbUser", source = "rfbUser", qualifiedByName = "rfbUserId")
     @Mapping(target = "event", source = "event", qualifiedByName = "eventId")
+    @Mapping(target = "rfbUser", source = "rfbUser", qualifiedByName = "rfbUserId")
     EventAttendanceDTO toDto(EventAttendance s);
-
-    @Named("rfbUserId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    RfbUserDTO toDtoRfbUserId(RfbUser rfbUser);
 
     @Named("eventId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     EventDTO toDtoEventId(Event event);
+
+    @Named("rfbUserId")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
+    RfbUserDTO toDtoRfbUserId(RfbUser rfbUser);
 }

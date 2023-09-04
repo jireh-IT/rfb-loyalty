@@ -9,10 +9,10 @@ import { of, Subject, from } from 'rxjs';
 import { EventAttendanceFormService } from './event-attendance-form.service';
 import { EventAttendanceService } from '../service/event-attendance.service';
 import { IEventAttendance } from '../event-attendance.model';
-import { IRfbUser } from 'app/entities/rfb-user/rfb-user.model';
-import { RfbUserService } from 'app/entities/rfb-user/service/rfb-user.service';
 import { IEvent } from 'app/entities/event/event.model';
 import { EventService } from 'app/entities/event/service/event.service';
+import { IRfbUser } from 'app/entities/rfb-user/rfb-user.model';
+import { RfbUserService } from 'app/entities/rfb-user/service/rfb-user.service';
 
 import { EventAttendanceUpdateComponent } from './event-attendance-update.component';
 
@@ -22,8 +22,8 @@ describe('EventAttendance Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let eventAttendanceFormService: EventAttendanceFormService;
   let eventAttendanceService: EventAttendanceService;
-  let rfbUserService: RfbUserService;
   let eventService: EventService;
+  let rfbUserService: RfbUserService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -45,31 +45,13 @@ describe('EventAttendance Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     eventAttendanceFormService = TestBed.inject(EventAttendanceFormService);
     eventAttendanceService = TestBed.inject(EventAttendanceService);
-    rfbUserService = TestBed.inject(RfbUserService);
     eventService = TestBed.inject(EventService);
+    rfbUserService = TestBed.inject(RfbUserService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call rfbUser query and add missing value', () => {
-      const eventAttendance: IEventAttendance = { id: 456 };
-      const rfbUser: IRfbUser = { id: 1136 };
-      eventAttendance.rfbUser = rfbUser;
-
-      const rfbUserCollection: IRfbUser[] = [{ id: 732 }];
-      jest.spyOn(rfbUserService, 'query').mockReturnValue(of(new HttpResponse({ body: rfbUserCollection })));
-      const expectedCollection: IRfbUser[] = [rfbUser, ...rfbUserCollection];
-      jest.spyOn(rfbUserService, 'addRfbUserToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ eventAttendance });
-      comp.ngOnInit();
-
-      expect(rfbUserService.query).toHaveBeenCalled();
-      expect(rfbUserService.addRfbUserToCollectionIfMissing).toHaveBeenCalledWith(rfbUserCollection, rfbUser);
-      expect(comp.rfbUsersCollection).toEqual(expectedCollection);
-    });
-
     it('Should call Event query and add missing value', () => {
       const eventAttendance: IEventAttendance = { id: 456 };
       const event: IEvent = { id: 19699 };
@@ -92,18 +74,40 @@ describe('EventAttendance Management Update Component', () => {
       expect(comp.eventsSharedCollection).toEqual(expectedCollection);
     });
 
-    it('Should update editForm', () => {
+    it('Should call RfbUser query and add missing value', () => {
       const eventAttendance: IEventAttendance = { id: 456 };
-      const rfbUser: IRfbUser = { id: 18909 };
+      const rfbUser: IRfbUser = { id: 1136 };
       eventAttendance.rfbUser = rfbUser;
-      const event: IEvent = { id: 384 };
-      eventAttendance.event = event;
+
+      const rfbUserCollection: IRfbUser[] = [{ id: 732 }];
+      jest.spyOn(rfbUserService, 'query').mockReturnValue(of(new HttpResponse({ body: rfbUserCollection })));
+      const additionalRfbUsers = [rfbUser];
+      const expectedCollection: IRfbUser[] = [...additionalRfbUsers, ...rfbUserCollection];
+      jest.spyOn(rfbUserService, 'addRfbUserToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ eventAttendance });
       comp.ngOnInit();
 
-      expect(comp.rfbUsersCollection).toContain(rfbUser);
+      expect(rfbUserService.query).toHaveBeenCalled();
+      expect(rfbUserService.addRfbUserToCollectionIfMissing).toHaveBeenCalledWith(
+        rfbUserCollection,
+        ...additionalRfbUsers.map(expect.objectContaining)
+      );
+      expect(comp.rfbUsersSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should update editForm', () => {
+      const eventAttendance: IEventAttendance = { id: 456 };
+      const event: IEvent = { id: 384 };
+      eventAttendance.event = event;
+      const rfbUser: IRfbUser = { id: 18909 };
+      eventAttendance.rfbUser = rfbUser;
+
+      activatedRoute.data = of({ eventAttendance });
+      comp.ngOnInit();
+
       expect(comp.eventsSharedCollection).toContain(event);
+      expect(comp.rfbUsersSharedCollection).toContain(rfbUser);
       expect(comp.eventAttendance).toEqual(eventAttendance);
     });
   });
@@ -177,16 +181,6 @@ describe('EventAttendance Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
-    describe('compareRfbUser', () => {
-      it('Should forward to rfbUserService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(rfbUserService, 'compareRfbUser');
-        comp.compareRfbUser(entity, entity2);
-        expect(rfbUserService.compareRfbUser).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
     describe('compareEvent', () => {
       it('Should forward to eventService', () => {
         const entity = { id: 123 };
@@ -194,6 +188,16 @@ describe('EventAttendance Management Update Component', () => {
         jest.spyOn(eventService, 'compareEvent');
         comp.compareEvent(entity, entity2);
         expect(eventService.compareEvent).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareRfbUser', () => {
+      it('Should forward to rfbUserService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(rfbUserService, 'compareRfbUser');
+        comp.compareRfbUser(entity, entity2);
+        expect(rfbUserService.compareRfbUser).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

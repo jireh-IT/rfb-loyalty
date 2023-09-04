@@ -44,6 +44,7 @@ public class CacheConfiguration {
             createCache(cm, com.jireh.domain.Location.class.getName());
             createCache(cm, com.jireh.domain.Location.class.getName() + ".events");
             createCache(cm, com.jireh.domain.RfbUser.class.getName());
+            createCache(cm, com.jireh.domain.RfbUser.class.getName() + ".eventAttendances");
             // jhipster-needle-ehcache-add-entry
         };
     }

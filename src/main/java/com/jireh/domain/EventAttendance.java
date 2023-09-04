@@ -23,14 +23,13 @@ public class EventAttendance implements Serializable {
     @Column(name = "attendance_date")
     private LocalDate attendanceDate;
 
-    @JsonIgnoreProperties(value = { "homeLocation", "eventAttendance" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
-    private RfbUser rfbUser;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "eventAttendances", "location" }, allowSetters = true)
     private Event event;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "homeLocation", "eventAttendances" }, allowSetters = true)
+    private RfbUser rfbUser;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -60,19 +59,6 @@ public class EventAttendance implements Serializable {
         this.attendanceDate = attendanceDate;
     }
 
-    public RfbUser getRfbUser() {
-        return this.rfbUser;
-    }
-
-    public void setRfbUser(RfbUser rfbUser) {
-        this.rfbUser = rfbUser;
-    }
-
-    public EventAttendance rfbUser(RfbUser rfbUser) {
-        this.setRfbUser(rfbUser);
-        return this;
-    }
-
     public Event getEvent() {
         return this.event;
     }
@@ -83,6 +69,19 @@ public class EventAttendance implements Serializable {
 
     public EventAttendance event(Event event) {
         this.setEvent(event);
+        return this;
+    }
+
+    public RfbUser getRfbUser() {
+        return this.rfbUser;
+    }
+
+    public void setRfbUser(RfbUser rfbUser) {
+        this.rfbUser = rfbUser;
+    }
+
+    public EventAttendance rfbUser(RfbUser rfbUser) {
+        this.setRfbUser(rfbUser);
         return this;
     }
 

@@ -17,6 +17,12 @@
       "relationshipName": "homeLocation",
       "relationshipSide": "left",
       "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "eventAttendance",
+      "relationshipName": "eventAttendance",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     }
   ],
   "searchEngine": "no",

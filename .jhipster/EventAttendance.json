@@ -11,14 +11,7 @@
   ],
   "name": "EventAttendance",
   "pagination": "infinite-scroll",
-  "relationships": [
-    {
-      "otherEntityName": "rfbUser",
-      "relationshipName": "rfbUser",
-      "relationshipSide": "left",
-      "relationshipType": "one-to-one"
-    }
-  ],
+  "relationships": [],
   "searchEngine": "no",
   "service": "serviceImpl"
 }

@@ -19,8 +19,8 @@ type EventAttendanceFormDefaults = Pick<NewEventAttendance, 'id'>;
 type EventAttendanceFormGroupContent = {
   id: FormControl<IEventAttendance['id'] | NewEventAttendance['id']>;
   attendanceDate: FormControl<IEventAttendance['attendanceDate']>;
-  rfbUser: FormControl<IEventAttendance['rfbUser']>;
   event: FormControl<IEventAttendance['event']>;
+  rfbUser: FormControl<IEventAttendance['rfbUser']>;
 };
 
 export type EventAttendanceFormGroup = FormGroup<EventAttendanceFormGroupContent>;
@@ -41,8 +41,8 @@ export class EventAttendanceFormService {
         }
       ),
       attendanceDate: new FormControl(eventAttendanceRawValue.attendanceDate),
-      rfbUser: new FormControl(eventAttendanceRawValue.rfbUser),
       event: new FormControl(eventAttendanceRawValue.event),
+      rfbUser: new FormControl(eventAttendanceRawValue.rfbUser),
     });
   }
 

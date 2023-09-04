@@ -40,13 +40,6 @@ public interface RfbUserService {
     List<RfbUserDTO> findAll();
 
     /**
-     * Get all the RfbUserDTO where EventAttendance is {@code null}.
-     *
-     * @return the {@link List} of entities.
-     */
-    List<RfbUserDTO> findAllWhereEventAttendanceIsNull();
-
-    /**
      * Get the "id" rfbUser.
      *
      * @param id the id of the entity.

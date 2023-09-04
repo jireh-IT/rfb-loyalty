@@ -21,8 +21,8 @@ describe('EventAttendance Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             attendanceDate: expect.any(Object),
-            rfbUser: expect.any(Object),
             event: expect.any(Object),
+            rfbUser: expect.any(Object),
           })
         );
       });
@@ -34,8 +34,8 @@ describe('EventAttendance Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             attendanceDate: expect.any(Object),
-            rfbUser: expect.any(Object),
             event: expect.any(Object),
+            rfbUser: expect.any(Object),
           })
         );
       });
